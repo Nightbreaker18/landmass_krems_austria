@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "ProceduralKremsAustria.sln"
+    "dotnet.defaultSolution": "landmass_krems_austria.sln"
 }
