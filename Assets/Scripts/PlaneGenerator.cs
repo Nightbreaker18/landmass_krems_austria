@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -17,6 +18,9 @@ namespace Assets.Scripts.Testing
         public Material noise_test;
         [Min(1)] public int width = 1, height = 1;
         [Min(0.01f)] public float noiseScale;
+        public float angleOffset;
+        public float cellDensity;
+        public bool modifyHeight = false; // Implement custom plane mesh
 
         private void Start()
         {
@@ -24,8 +28,17 @@ namespace Assets.Scripts.Testing
             plane.transform.localScale = new Vector3(width, 1, height);
             plane.GetComponent<MeshRenderer>().material = noise_test;
 
-            float[,] noiseMap = noiseType == NoiseType.Perlin ? Noise.PerlinNoise(width, height, noiseScale) : new float[0, 0];
-            noise_test.mainTexture = SetTexture(noiseMap);
+            if (noiseType == NoiseType.Perlin)
+            {
+                float[,] noiseMap = Noise.PerlinNoiseMap(width, height, noiseScale);
+                noise_test.mainTexture = SetTexture(noiseMap);
+            }
+
+            else if (noiseType == NoiseType.Voronoi)
+            {
+                float[,] noiseMap = Noise.VoronoiNoiseMap(width, height, noiseScale, angleOffset, cellDensity);
+                noise_test.mainTexture = SetTexture(noiseMap);
+            }
         }
 
         public Texture2D SetTexture(float[,] noiseMap)

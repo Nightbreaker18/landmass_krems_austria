@@ -221,12 +221,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 699449914}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 50, y: 1, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2006948902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -492,13 +492,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1371153530}
+  - component: {fileID: 1371153531}
   m_Layer: 0
   m_Name: Perlin Generator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1371153530
 Transform:
   m_ObjectHideFlags: 0
@@ -514,6 +515,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1371153531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371153529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b21e2753da62d44a9ea1e63e116a47f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseType: 0
+  noise_test: {fileID: 2100000, guid: 4ee37b3c4630cbf41829984f38177237, type: 2}
+  width: 100
+  height: 100
+  noiseScale: 1
+  angleOffset: 0
+  cellDensity: 0
+  modifyHeight: 0
 --- !u!1 &1490750171
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,7 +606,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2006948902}
-  - component: {fileID: 2006948901}
+  - component: {fileID: 2006948903}
   m_Layer: 0
   m_Name: Voronoi Generator
   m_TagString: Untagged
@@ -593,23 +614,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2006948901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2006948900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b21e2753da62d44a9ea1e63e116a47f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  noiseType: 0
-  noise_test: {fileID: 2100000, guid: 4ee37b3c4630cbf41829984f38177237, type: 2}
-  width: 50
-  height: 50
-  noiseScale: 0
 --- !u!4 &2006948902
 Transform:
   m_ObjectHideFlags: 0
@@ -622,9 +626,30 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 699449918}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2006948903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2006948900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b21e2753da62d44a9ea1e63e116a47f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseType: 1
+  noise_test: {fileID: 2100000, guid: 5e8c304caaeced742bfee672b86db604, type: 2}
+  width: 50
+  height: 50
+  noiseScale: 1
+  angleOffset: 2
+  cellDensity: 5
+  modifyHeight: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -635,4 +660,3 @@ SceneRoots:
   - {fileID: 1490750172}
   - {fileID: 1371153530}
   - {fileID: 2006948902}
-  - {fileID: 699449918}
