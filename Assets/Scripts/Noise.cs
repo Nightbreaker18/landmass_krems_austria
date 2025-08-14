@@ -6,8 +6,8 @@ namespace Assets.Scripts
 {
     public static class Noise
     {
-        // Absolutely primitive rn, not a priority.
-        public static float[,] PerlinNoiseMap(int width, int height, float scale)
+        // TODO: add octaves.
+        public static float[,] CreateNoiseMap(NoiseType noiseType, int width, int height, float scale, float angleOffset = 5f, float cellDensity = 2f)
         {
             float[,] noiseMap = new float[width, height];
 
@@ -18,40 +18,23 @@ namespace Assets.Scripts
                     float sampleX = x / scale;
                     float sampleY = y / scale;
 
-                    float perlinValue = Mathf.PerlinNoise(sampleX, sampleY);
-                    noiseMap[x, y] = perlinValue;
+                    float noiseValue = noiseType == NoiseType.Perlin ? Mathf.PerlinNoise(sampleX, sampleY) : VoronoiNoise(sampleX, sampleY, angleOffset, cellDensity);
+                    noiseMap[x, y] = noiseValue;
                 }
             }
 
             return noiseMap;
         }
 
-        public static float[,] VoronoiNoiseMap(int width, int height, float scale, float angleOffset, float cellDensity)
-        {
-            float[,] noiseMap = new float[width, height];
-
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    float sampleX = x / scale;
-                    float sampleY = y / scale;
-
-                    float voronoiValue = SampleVoronoiNoise01(sampleX, sampleY, angleOffset, cellDensity);
-                    noiseMap[x, y] = voronoiValue;
-                }
-            }
-
-            return noiseMap;
-        }
-
-        private static float SampleVoronoiNoise01(float sampleX, float sampleY, float angleOffset, float cellDensity)
+        public static float VoronoiNoise(float sampleX, float sampleY, float angleOffset, float cellDensity)
         {
             const float maxDistance = 1.41421356237f; // Square root of 2
-            return Mathf.Clamp01(VoronoiNoise(sampleX, sampleY, angleOffset, cellDensity) / maxDistance);
+            return Mathf.Clamp01(VoronoiNoiseAlgorithm(sampleX, sampleY, angleOffset, cellDensity) / maxDistance);
         }
 
-        private static float VoronoiNoise(float sampleX, float sampleY, float angleOffset, float cellDensity = 5f)
+        // Translated myself from the documentation of Voronoi noise from shader graph
+        // See https://docs.unity3d.com/Packages/com.unity.shadergraph@6.9/manual/Voronoi-Node.html
+        private static float VoronoiNoiseAlgorithm(float sampleX, float sampleY, float angleOffset, float cellDensity = 5f)
         {
             Vector2 uv = new Vector2(sampleX, sampleY);
 
@@ -94,32 +77,10 @@ namespace Assets.Scripts
             return new Vector2(ox, oy);
         }
 
+        // Returns the fractional part of the input.
         private static float Frac(float val)
         {
             return val - Mathf.Floor(val);
         }
-
-        /*public static float[,] VoronoiNoise(int width, int height, float scale)
-        {
-            float[,] noiseMap = new float[width, height];
-            Vector2[,] pixelUVs = new Vector2[width, height];
-
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    float u = (float)x / (width - 1);
-                    float v = (float)y / (height - 1);
-
-                    pixelUVs[x, y] = new Vector2(Mathf.Abs(Fraction(u) - 0.5f), Mathf.Abs(Fraction(v) - 0.5f)) * 4;
-                }
-            }
-            return noiseMap;
-        }
-
-        private static float Fraction(float num)
-        {
-            return num - Mathf.Floor(num);
-        }*/
     }
 }
